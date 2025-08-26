@@ -71,7 +71,7 @@ const createQueries = (currentUser: Models.Document) => {
   return queries;
 };
 
-export const getFiles = async () => {
+export const getFiles = async ({ types = [] }) => {
   const { databases } = await createAdminClient();
 
   try {
@@ -110,7 +110,7 @@ export const renameFile = async ({
       fileId,
       {
         name: newName,
-      },
+      }
     );
 
     revalidatePath(path);
@@ -134,7 +134,7 @@ export const updateFileUsers = async ({
       fileId,
       {
         users: emails,
-      },
+      }
     );
 
     revalidatePath(path);
@@ -155,15 +155,15 @@ export const deleteFile = async ({
     const deletedFile = await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.filesCollectionId,
-      fileId,
+      fileId
     );
 
-    if(deletedFile) {
+    if (deletedFile) {
       await storage.deleteFile(appwriteConfig.bucketId, bucketFileId);
     }
 
     revalidatePath(path);
-    return parseStringify({status: "success"});
+    return parseStringify({ status: "success" });
   } catch (error) {
     handleError(error, "Failed to rename file");
   }
