@@ -6,8 +6,9 @@ import { convertFileSize, formatDateTime } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { MyFileDocument } from "@/types";
 
-const ImageThumbnail = ({ file }: { file: Models.Document }) => (
+const ImageThumbnail = ({ file }: { file: MyFileDocument }) => (
   <div className="file-details-thumbnail">
     <Thumbnail type={file.type} extension={file.extension} url={file.url} />
     <div className="flex flex-col">
@@ -24,14 +25,14 @@ const DetailRow = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export const FileDetails = ({ file }: { file: Models.Document }) => {
+export const FileDetails = ({ file }: { file: MyFileDocument }) => {
   return (
     <>
       <ImageThumbnail file={file} />
       <div className="space-y-4 px-2 pt-2">
         <DetailRow label="Format: " value={file.extension} />
         <DetailRow label="Size: " value={convertFileSize(file.size)} />
-        <DetailRow label="Owner: " value={file.owner.fullName} />
+        {/* <DetailRow label="Owner: " value={file.owner.fullName} /> */}
         <DetailRow
           label="Last Edit: "
           value={formatDateTime(file.$updatedAt)}
@@ -42,7 +43,7 @@ export const FileDetails = ({ file }: { file: Models.Document }) => {
 };
 
 interface Props {
-  file: Models.Document;
+  file: MyFileDocument;
   onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
   onRemove: (email: string) => void;
 }

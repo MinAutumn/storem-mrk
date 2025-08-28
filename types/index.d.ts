@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { Models } from "node-appwrite";
+
 declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
 declare interface ActionType {
@@ -73,4 +75,16 @@ declare interface ShareInputProps {
   file: Models.Document;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (email: string) => void;
+}
+
+declare interface MyFileDocument extends Models.Document {
+  users: array;
+  owner: array;
+  url: string;
+  type: string;
+  extension: string;
+  name: string;
+  email: string;
+  bucketFileId: string;
+  size: number;
 }

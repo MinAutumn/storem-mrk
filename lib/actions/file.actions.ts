@@ -7,6 +7,7 @@ import { ID, Models, Query } from "node-appwrite";
 import { constructFileUrl, getFileType, parseStringify } from "../utils";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "./user.actions";
+import { DeleteFileProps, FileType, GetFilesProps, MyFileDocument, RenameFileProps, UpdateFileUsersProps, UploadFileProps } from "@/types";
 
 const handleError = (error: unknown, message: string) => {
   console.log(message, error);
@@ -61,7 +62,7 @@ export const uploadFile = async ({
 };
 
 const createQueries = (
-  currentUser: Models.Document,
+  currentUser: MyFileDocument,
   types: string[],
   searchText: string,
   sort: string,
@@ -103,7 +104,6 @@ export const getFiles = async ({
     if (!currentUser) throw new Error("User not found");
 
     const queries = createQueries(currentUser, types, searchText, sort);
-    console.log({ currentUser, queries });
 
     const files = await databases.listDocuments(
       appwriteConfig.databaseId,

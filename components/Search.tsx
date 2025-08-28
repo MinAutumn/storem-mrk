@@ -9,12 +9,13 @@ import { Models } from "node-appwrite";
 import Thumbnail from "./Thumbnail";
 import FormattedDateTime from "./FormattedDateTime";
 import { useDebounce } from 'use-debounce';
+import { MyFileDocument } from "@/types";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("query") || "";
-  const [results, setResults] = useState<Models.Document[]>([]);
+  const [results, setResults] = useState<MyFileDocument[]>([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const path = usePathname();
@@ -42,7 +43,7 @@ const Search = () => {
     }
   }, [searchQuery]);
 
-  const handleClickItem = (file: Models.Document) => {
+  const handleClickItem = (file: MyFileDocument) => {
     setOpen(false);
     setResults([]);
     router.push(

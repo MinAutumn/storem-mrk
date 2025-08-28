@@ -25,7 +25,6 @@ const handleError = (error: unknown, message: string) => {
 };
 
 export const sendEmailOTP = async ({ email }: { email: string }) => {
-  console.log("OTP");
   const { account } = await createAdminClient();
 
   try {
